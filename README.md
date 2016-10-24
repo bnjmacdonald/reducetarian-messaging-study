@@ -1,23 +1,20 @@
 # README
---------
 
-This repository contains the code and data for replicating the results of a messaging experiment conducted by the [Animal Welfare Action Lab (AWAL)](www.awalab.org) with the support of the [Reducetarian Foundation](http://reducetarian.org/lab/). 
+This repository contains the code and data for replicating the results of a messaging experiment conducted by the [Animal Welfare Action Lab (AWAL)](http://www.awalab.org) with the support of the [Reducetarian Foundation](http://reducetarian.org/lab/). 
 
-Other study materials (including the working paper, pre-registration, and surveys) are available at: [https://osf.io/44z7j/](https://osf.io/44z7j/).
+The working paper, pre-registration, and surveys for this study are available at: [https://osf.io/44z7j/](https://osf.io/44z7j/).
 
-We welcome contributions to the existing set of analyses (see `TODO.md` for a to do list of analyses). If you wish to contribute, follow the instructions [here](http://kbroman.org/github_tutorial/pages/fork.html) to fork the repository, make changes, and submit a pull request.
+We welcome contributions to the existing set of analyses (see `TODO.md` for a list of analyses that have not been completed yet). If you wish to contribute, follow the instructions [here](http://kbroman.org/github_tutorial/pages/fork.html) to fork the repository, make changes, and submit a pull request.
 
 ## Replicating the analyses
----------------------------
 
 1. Download the entire repository.
 2. To replicate the data cleaning (i.e. converting raw data files in `raw-data-shareable` into clean data files in `cleaned-data-shreable`), open a command line session and run: `$ bash clean.sh`
 3. To replicate the data analysis, open a new command line session and run: `$ bash analysis.sh`
 
-This will run the R scripts in order and reproduce the main results contained in the `results`, `tables`, and `figures` folders.
+This will run the R scripts in order and reproduce the main results contained in the `results`, `tables`, and `figures` directories.
 
-## R Scripts
-------------
+## Main R Scripts
 
 * `01-wave1-cleaning.R` cleans the wave 1 Qualtrics data and saves it as a csv file.
 * `02-blocking.R` was used for block randomized assignment to treatment.
@@ -29,15 +26,13 @@ This will run the R scripts in order and reproduce the main results contained in
 * `08-alternative-analyses.R` contains analyses for examining treatment effects on other outcomes of interest.
 
 ## Data
--------
 
 * `cleaned-data-shareable/all_waves_cleaned.csv` contains the cleaned data output by `05-merging-all-waves.R` that is used to produce the main results.
 * `raw-data-shareable/` contains the raw unprocessed data.
-* all MTurk IDs have been replaced with hashed IDs to ensure anonymity.
 * see `other-scripts/variables.r` for a description of variables in the cleaned data files. See `var-dicts/` for the interpretation of variable names in the raw data files.
+* all MTurk IDs have been replaced with hashed IDs to ensure anonymity.
 
 ## Other folders
-----------------
 
 * `var-dicts/` contains variable dictionaries for the raw data files.
 * `functions/` contains functions that are called in the main R scripts.
