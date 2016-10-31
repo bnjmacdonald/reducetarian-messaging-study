@@ -21,6 +21,7 @@ data$mt_chg <- data$mt.3 - data$mt.1
 data$bogus.1 <- data$FFQfreqFruit.1 + data$FFQfreqNuts.1 + data$FFQfreqVegetables.1 + data$FFQfreqBeans.1 + data$FFQfreqGrains.1
 data$bogus.3 <- data$FFQfreqFruit.3 + data$FFQfreqNuts.3 + data$FFQfreqVegetables.3 + data$FFQfreqBeans.3 + data$FFQfreqGrains.3
 data$bogus_chg <- data$bogus.3 - data$bogus.1
+data$vegetable_chg <- data$FFQfreqVegetables.3 - data$FFQfreqVegetables.1
 
 # Analysis
 data %>% ctable(FFQtotalSumMeat_chg, treatment)
@@ -85,6 +86,14 @@ data %>% ctable(howOftenEatMeat_chg, treatment)
 # Multiple R-squared:  0.002456,  Adjusted R-squared:  0.001562
 # F-statistic: 2.746 on 2 and 2230 DF,  p-value: 0.06443
 
+data %>% filter(treatment == "control") %>% .$veg_chg %>% table
+# -1   0   1
+#  3 727   6
+data %>% filter(treatment != "control") %>% .$veg_chg %>% table
+# -1    0    1
+#  6 1478    8
+
+
 data %>% ctable(veg_chg > 0, treatment)
 # > veg_chg 0 ### treatment
 
@@ -113,17 +122,70 @@ data %>% ctable(mt_chg < 0, treatment == "control")
 # X-squared = 9.9013, df = 1, p-value = 0.001652
 
 data %>% ctable(bogus_chg < 0, treatment == "control")
+# p-value: 0.7933
+
+data %>% ctable(bogus_chg < 0, treatment == "control")
 # < bogus_chg 0 ### == treatment control
 
 #          FALSE   TRUE
 #   FALSE 0.5755 0.5860
 #   TRUE  0.4245 0.4140
 
+data %>% ctable(vegetable_chg, treatment == "control")
+# p-value: 0.1778
+
 
 #         Pearson's Chi-squared test with Yates' continuity correction
 
 # data:  x and y
 # X-squared = 0.17827, df = 1, p-value = 0.6729
+
+
+# Product elimination analysis
+data %>% filter(treatment == "control") %>% { (.$FFQfreqBeef.3 == 0 & .$FFQfreqBeef.1 > 0) } %>% table
+# FALSE  TRUE
+#   721    15
+# 2.0380435%
+data %>% filter(treatment != "control") %>% { (.$FFQfreqBeef.3 == 0 & .$FFQfreqBeef.1 > 0) } %>% table
+# FALSE  TRUE
+#  1450    40
+# 2.684563758%
+
+data %>% filter(treatment == "control") %>% { (.$FFQfreqChicken.3 == 0 & .$FFQfreqChicken.1 > 0) } %>% table
+# FALSE  TRUE
+#   726    10
+# 1.358695652%
+data %>% filter(treatment != "control") %>% { (.$FFQfreqChicken.3 == 0 & .$FFQfreqChicken.1 > 0) } %>% table
+# FALSE  TRUE
+#  1477    15
+# 1.00536193%
+
+data %>% filter(treatment == "control") %>% { (.$FFQfreqFish.3 == 0 & .$FFQfreqFish.1 > 0) } %>% table
+# FALSE  TRUE
+#   694    40
+# 5.449591281%
+data %>% filter(treatment != "control") %>% { (.$FFQfreqFish.3 == 0 & .$FFQfreqFish.1 > 0) } %>% table
+# FALSE  TRUE
+#  1412    80
+# 5.361930295%
+
+data %>% filter(treatment == "control") %>% { (.$FFQfreqEggs.3 == 0 & .$FFQfreqEggs.1 > 0) } %>% table
+# FALSE  TRUE
+#   724    11
+# 1.496598639%
+data %>% filter(treatment != "control") %>% { (.$FFQfreqEggs.3 == 0 & .$FFQfreqEggs.1 > 0) } %>% table
+# FALSE  TRUE
+#  1440    52
+# 3.485254692%
+
+data %>% filter(treatment == "control") %>% { (.$FFQfreqDairy.3 == 0 & .$FFQfreqDairy.1 > 0) } %>% table
+# FALSE  TRUE
+#   726     9
+# 1.2244898%
+data %>% filter(treatment != "control") %>% { (.$FFQfreqDairy.3 == 0 & .$FFQfreqDairy.1 > 0) } %>% table
+# FALSE  TRUE
+#  1471    15
+# 0.605652759%
 
 
 # Consumption analysis
