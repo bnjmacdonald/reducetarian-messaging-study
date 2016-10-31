@@ -141,6 +141,16 @@ data %>% ctable(vegetable_chg, treatment == "control")
 # X-squared = 0.17827, df = 1, p-value = 0.6729
 
 
+# Beef vs. chicken
+data %>% filter(treatment == "control") %>% filter(FFQfreqBeef.3 < FFQfreqBeef.1) %>% { .$FFQfreqChicken.3 - .$FFQfreqChicken.1 } %>% mean(., na.rm = T)
+# [1] -0.6649485
+data %>% filter(treatment != "control") %>% filter(FFQfreqBeef.3 < FFQfreqBeef.1) %>% { .$FFQfreqChicken.3 - .$FFQfreqChicken.1 } %>% mean(., na.rm = T)
+# [1] -2.200758
+data %>% filter(treatment == "control") %>% filter(FFQfreqChicken.3 < FFQfreqChicken.1) %>% { .$FFQfreqBeef.3 - .$FFQfreqBeef.1 } %>% mean(., na.rm = T)
+# [1] -1
+data %>% filter(treatment != "control") %>% filter(FFQfreqChicken.3 < FFQfreqChicken.1) %>% { .$FFQfreqBeef.3 - .$FFQfreqBeef.1 } %>% mean(., na.rm = T)
+# [1] -2.283673
+
 # Product elimination analysis
 data %>% filter(treatment == "control") %>% { (.$FFQfreqBeef.3 == 0 & .$FFQfreqBeef.1 > 0) } %>% table
 # FALSE  TRUE
