@@ -6,7 +6,7 @@ The working paper, pre-registration, and surveys for this study are available at
 
 We welcome contributions to the existing set of analyses (see `TODO.md` for a list of analyses that have not been completed yet). If you wish to contribute, follow the instructions [here](http://kbroman.org/github_tutorial/pages/fork.html) to fork the repository, make changes, and submit a pull request.
 
-Citation: 
+**Citation:**
 
 Macdonald, BNJ, KD Caldwell, and GD Boese. 2016. The effects of "reduce" and "eliminate" appeals on individual meat consumption. *Unpublished manuscript*. Available at: https://osf.io/nxrx3/. 
 

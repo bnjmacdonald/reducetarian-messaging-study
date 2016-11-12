@@ -38,6 +38,25 @@ assignments <- read.csv(paste(TREATMENTS_PATH, '/all-treatment-assignments.csv',
 # changes column name of manual MTurk ID entry variable to mTurkID for consistency with other cleaned waves.
 colnames(wave2_data)[which(colnames(wave2_data) %in% 'QID82_1')] <- 'mTurkID'
 
+# ------------------------------------- #
+# CHANGES COLUMN NAMES FOR READABILITY  #
+# ------------------------------------- #
+
+origNames <- c('QID96',  # do you intend to change you fruit and veg consumption in next 30 days? 
+               'QID100'  # do you intend to change you meat consumption in next 30 days? 
+               )
+
+newNames <- c("intentChangeFruitVeg", # do you intend to change you fruit and veg consumption in next 30 days? 
+              "intentChangeMeat"  # do you intend to change you meat consumption in next 30 days?
+              )
+# cbind(origNames, newNames)
+
+for (i in 1:length(origNames)) {
+  colnames(wave2_data)[which(colnames(wave2_data)==origNames[i])] <- newNames[i]
+}
+# colnames(wave2_data)[which(colnames(wave2_data) %in% origNames)] <- newNames
+colnames(wave2_data)
+
 
 # -------------------- #
 # checks MTurk IDs from wave 2.
@@ -45,7 +64,7 @@ colnames(wave2_data)[which(colnames(wave2_data) %in% 'QID82_1')] <- 'mTurkID'
 # checks if embedded data (MID) does not equal manual entry (mTurkID) for any rows.
 table(wave2_data$MID == wave2_data$mTurkID, exclude=NULL)
 na_test <- (wave2_data$MID != wave2_data$mTurkID) | (is.na(wave2_data$mTurkID) | is.na(wave2_data$MID))
-wave2_data[na_test, c('mTurkID', 'MID', 'progress', 'finished')]
+# wave2_data[na_test, c('mTurkID', 'MID', 'progress', 'finished')]
 
 # NOTE: wih one exception, all rows in which there is an MID but not mTurkID are where progress == 4. The one exception is where someone entered there MTurkID twice.
 
@@ -77,9 +96,23 @@ wave2_data_merged <- wave2_data_merged[!is.na(wave2_data_merged$treatment),]
 wave2_data_merged$block_id[is.na(wave2_data_merged$block_id)] <- 0
 
 # -------------------- #
+# cleans wave 2 variables.
+
+# INTENT TO CHANGE FRUIT AND VEG
+table(wave2_data_merged$intentChangeFruitVeg, exclude=NULL)
+unique(wave2_data_merged$intentChangeFruitVeg, na.rm=FALSE)
+wave2_data_merged$intentChangeFruitVeg <- as.numeric(ordered(wave2_data_merged$intentChangeFruitVeg, levels=c("Greatly decrease", "Decrease", "Somewhat Decrease", "Maintain current levels", "Somewhat increase", "Increase", "Greatly increase")))
+
+# INTENT TO CHANGE MEAT
+table(wave2_data_merged$intentChangeMeat, exclude=NULL)
+unique(wave2_data_merged$intentChangeMeat, na.rm=FALSE)
+wave2_data_merged$intentChangeMeat <- as.numeric(ordered(wave2_data_merged$intentChangeMeat, levels=c("Greatly decrease", "Decrease", "Somewhat Decrease", "Maintain current levels", "Somewhat increase", "Increase", "Greatly increase")))
+
+
+# -------------------- #
 # saves cleaned wave 2 data to file
 
-cols_to_keep <- c('mTurkID', 'treatment', 'block_id')
+cols_to_keep <- c('mTurkID', 'treatment', 'block_id', newNames)
 write.csv(wave2_data_merged[,cols_to_keep], paste(OUTPUT_PATH, '/02_wave2_cleanedData.csv', sep=''), row.names=FALSE)
 
 
