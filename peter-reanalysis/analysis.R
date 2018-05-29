@@ -1,7 +1,7 @@
 # Load libraries
-if (!require("dplyr") { install.packages("dplyr") }; library(dplyr)
+if (!require("dplyr")) { install.packages("dplyr") }; library(dplyr)
 if (!require("devtools")) { install.packages("devtools") }
-if (!require("reader")) { install.packages("reader") }
+if (!require("readr")) { install.packages("readr") }
 if (!require("surveytools2") { devtools::install_github("peterhurford/surveytools2") }; library(surveytools2)
 
 # Load data
