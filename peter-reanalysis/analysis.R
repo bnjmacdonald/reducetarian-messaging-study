@@ -2,7 +2,7 @@
 if (!require("dplyr")) { install.packages("dplyr") }; library(dplyr)
 if (!require("devtools")) { install.packages("devtools") }
 if (!require("readr")) { install.packages("readr") }
-if (!require("surveytools2") { devtools::install_github("peterhurford/surveytools2") }; library(surveytools2)
+if (!require("surveytools2")) { devtools::install_github("peterhurford/surveytools2") }; library(surveytools2)
 
 # Load data
 data <- readr::read_csv("reducetarian_data_share.csv")
